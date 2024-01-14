@@ -4,7 +4,7 @@ resource "aws_iam_user" "example" {
 
 resource "aws_iam_policy" "cloudwatch_read_only" {
   name = "cloudwatch_read_only"
-  policy = data.aws_iam_policy.documnet.cloudwatch_read_only.json  
+  policy = data.aws_iam_policy_documnet.cloudwatch_read_only.json  
 }
 
 data "aws_iam_policy_document" "cloudwatch_read_only" {
@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "cloudwatch_read_only" {
 
 resource "aws_iam_policy" "cloudwatch_full_access" {
   name = "cloudwatch_full_access"
-  policy = data.aws_iam_policy.documnet.cloudwatch_full_access.json  
+  policy = data.aws_iam_policy_documnet.cloudwatch_full_access.json  
 }
 
 data "aws_iam_policy_document" "cloudwatch_full_access" {
