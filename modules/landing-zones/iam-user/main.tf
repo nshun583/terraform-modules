@@ -46,7 +46,7 @@ resource "aws_iam_policy_attachment" "neo_cloudwatch_read_only" {
   policy_arn = aws_iam_policy.cloudwatch_read_only.arn
 }
 
-output "neo.cloudwatach_policy_arn" {
+output "neo_cloudwatach_policy_arn" {
   value = one(concat(
     aws_iam_user_policy_attachment.neo_cloudwatch_full_access[*].policy_arn,
     aws_iam_user_policy_attachment.neo_cloudwatch_read_only[*].policy_arn
