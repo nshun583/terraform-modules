@@ -1,3 +1,3 @@
 resource "aws_iam_user" "example" {
-  name = var.user_names
+  name = var.user_name
 }
