@@ -25,16 +25,20 @@ resource "aws_launch_configuration" "example" {
 resource "aws_autoscaling_group" "example" {
   launch_configuration = aws_launch_configuration.example.name
   vpc_zone_identifier  = data.aws_subnets.default.ids
-  target_group_arns = [aws_alb_target_group.asg.arn]
-  health_check_type = "ELB"
+  target_group_arns    = [aws_alb_target_group.asg.arn]
+  health_check_type    = "ELB"
 
   min_size = var.min_size
   max_size = var.max_size
 
-  tag {
-    key                 = "Name"
-    value               = "${var.cluster_name}-asg"
-    propagate_at_launch = true
+  dynamic "tag" {
+    for_each = var.custom_tags
+
+    content {
+      key                 = "Name"
+      value               = "${var.cluster_name}-asg"
+      propagate_at_launch = true
+    }
   }
 }
 
