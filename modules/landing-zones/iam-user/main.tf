@@ -1,5 +1,6 @@
 resource "aws_iam_user" "example" {
-  name = var.user_name
+  count = length(var.user_names)
+  name  = var.user_names[count.index]
 }
 
 resource "aws_iam_policy" "cloudwatch_read_only" {
@@ -27,7 +28,7 @@ resource "aws_iam_policy" "cloudwatch_full_access" {
 data "aws_iam_policy_document" "cloudwatch_full_access" {
   statement {
     effect = "Allow"
-    actions = ["cloudwatch:*",]
+    actions = ["cloudwatch:*"]
     resources = ["*"]
   }
 }
@@ -39,16 +40,9 @@ resource "aws_iam_user_policy_attachment" "neo_cloudwatch_full_access" {
   policy_arn = aws_iam_policy.cloudwatch_full_access.arn
 }
 
-resource "aws_iam_policy_attachment" "neo_cloudwatch_read_only" {
+resource "aws_iam_user_policy_attachment" "neo_cloudwatch_read_only" {
   count = var.give_neo_cloudwatch_full_access ? 0 : 1
 
-  name = aws_iam_user.example[0].name
+  user = aws_iam_user.example[0].name
   policy_arn = aws_iam_policy.cloudwatch_read_only.arn
-}
-
-output "neo_cloudwatach_policy_arn" {
-  value = one(concat(
-    aws_iam_user_policy_attachment.neo_cloudwatch_full_access[*].policy_arn,
-    aws_iam_user_policy_attachment.neo_cloudwatch_read_only[*].policy_arn
-  ))
 }

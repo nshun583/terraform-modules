@@ -1,6 +1,6 @@
-variable "user_name" {
-  description = "The user name to use"
-  type        = string
+variable "user_names" {
+  description = "Create IAM users with these names"
+  type        = list(string)
 }
 
 variable "give_neo_cloudwatch_full_access" {
